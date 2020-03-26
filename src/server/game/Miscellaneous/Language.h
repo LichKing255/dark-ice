@@ -28,6 +28,7 @@ enum BroadcastTextIds
 
 enum TrinityStrings
 {
+    LANG_NONE = 0,
     // for chat commands
     LANG_SELECT_CHAR_OR_CREATURE        = 1,
     LANG_SELECT_CREATURE                = 2,
@@ -1146,5 +1147,6 @@ enum TrinityStrings
 
     LANG_DEBUG_LFG_ON                             = 11024,
     LANG_DEBUG_LFG_OFF                            = 11025,
+    LANG_BATTLE_PAY_ERROR_BAGS_FULL               = 11500,
 };
 #endif

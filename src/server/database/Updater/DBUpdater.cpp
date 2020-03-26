@@ -182,6 +182,39 @@ BaseLocation DBUpdater<HotfixDatabaseConnection>::GetBaseLocationType()
     return LOCATION_DOWNLOAD;
 }
 
+// Shop Database
+template<>
+std::string DBUpdater<ShopDatabaseConnection>::GetConfigEntry()
+{
+    return "Updates.Shop";
+}
+
+template<>
+std::string DBUpdater<ShopDatabaseConnection>::GetTableName()
+{
+    return "Shop";
+}
+
+template<>
+std::string DBUpdater<ShopDatabaseConnection>::GetBaseFile()
+{
+    return "";
+}
+
+template<>
+bool DBUpdater<ShopDatabaseConnection>::IsEnabled(uint32 const updateMask)
+{
+    // This way silences warnings under msvc
+    return (updateMask & DatabaseLoader::DATABASE_SHOP) ? true : false;
+}
+
+template<>
+BaseLocation DBUpdater<ShopDatabaseConnection>::GetBaseLocationType()
+{
+    return LOCATION_DOWNLOAD;
+}
+
+
 // All
 template<class T>
 BaseLocation DBUpdater<T>::GetBaseLocationType()
@@ -426,3 +459,4 @@ template class TC_DATABASE_API DBUpdater<LoginDatabaseConnection>;
 template class TC_DATABASE_API DBUpdater<WorldDatabaseConnection>;
 template class TC_DATABASE_API DBUpdater<CharacterDatabaseConnection>;
 template class TC_DATABASE_API DBUpdater<HotfixDatabaseConnection>;
+template class TC_DATABASE_API DBUpdater<ShopDatabaseConnection>;

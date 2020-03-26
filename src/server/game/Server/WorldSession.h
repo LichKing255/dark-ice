@@ -71,6 +71,13 @@ namespace rbac
 class RBACData;
 }
 
+namespace BattlePay
+{
+    struct Product;
+    struct Purchase;
+    enum Error : uint16;
+}
+
 namespace WorldPackets
 {
     namespace Achievement
@@ -149,6 +156,23 @@ namespace WorldPackets
     {
         class Request;
         class RequestRealmListTicket;
+    }
+
+    namespace BattlePayPackets
+    {
+        class GetProductList;
+        class GetPurchaseList;
+        class StartPurchase;
+        class ConfirmPurchaseResponse;
+        class AckFailedResponse;
+        class GetProductListResponse;
+        class GetPurchaseListResponse;
+        class GetDistributionListResponse;
+        class StartPurchaseResponse;
+        class ConfirmPurchase;
+        class PurchaseUpdate;
+        class DeliveryEnded;
+        class AckFailed;
     }
 
     namespace BattlePet
@@ -1813,6 +1837,21 @@ class TC_GAME_API WorldSession
 
         // Honor
         void HandlePvpPrestigeRankUp(WorldPackets::Misc::PvpPrestigeRankUp& /*pvpPrestigeRankUp*/);
+
+        // Battle Pay
+        void HandleGetProductList(WorldPackets::BattlePayPackets::GetProductList& /*getProductList*/);
+        void HandleGetPurchaseList(WorldPackets::BattlePayPackets::GetPurchaseList& /*getPurchaseList*/);
+        void HandleStartPurchase(WorldPackets::BattlePayPackets::StartPurchase& packet);
+        void HandleConfirmPurchaseResponse(WorldPackets::BattlePayPackets::ConfirmPurchaseResponse& packet);
+        void HandleAckFailedResponse(WorldPackets::BattlePayPackets::AckFailedResponse& packet);
+        void SendGetProductListResponse();
+        void SendGetPurchaseListResponse();
+        void SendGetDistributionListResponse();
+        void SendStartPurchaseResponse(uint32 ClientToken, uint64 PurchaseID, uint32 PurchaseResult);
+        void SendConfirmPurchase(uint32 ServerToken, uint64 PurchaseID, uint64 CurrentFixedPrice);
+        void SendPurchaseUpdate(BattlePay::Purchase* purchase);
+        void SendDeliveryEnded(uint32 itemId);
+        void SendAckFailed(BattlePay::Purchase* purchase, BattlePay::Error error);
 
         // Challenge Modes
         void HandleChallengeModeStart(WorldPackets::ChallengeMode::StartRequest& /*start*/);

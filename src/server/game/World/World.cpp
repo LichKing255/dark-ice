@@ -31,6 +31,7 @@
 #include "BattlefieldMgr.h"
 #include "BattlegroundMgr.h"
 #include "BattlenetRpcErrorCodes.h"
+#include "BattlePay.h"
 #include "BattlePetDataStore.h"
 #include "BlackMarketMgr.h"
 #include "CalendarMgr.h"
@@ -1304,6 +1305,10 @@ void World::LoadConfigSettings(bool reload)
        m_int_configs[CONFIG_NO_GRAY_AGGRO_BELOW] = m_int_configs[CONFIG_NO_GRAY_AGGRO_ABOVE];
     }
 
+    m_bool_configs[CONFIG_BATTLEPAY_STORE_ENABLED] = sConfigMgr->GetBoolDefault("IngameShop.Enabled", true);
+    m_bool_configs[CONFIG_BATTLEPAY_STORE_AVAILABLE] = sConfigMgr->GetIntDefault("IngameShop.Available", true);
+    m_bool_configs[CONFIG_BATTLEPAY_SHOW_ACCOUNT_BALANCE] = sConfigMgr->GetIntDefault("IngameShop.AccountBalance", false);
+
     ///- Read the "Data" directory from the config file
     std::string dataPath = sConfigMgr->GetStringDefault("DataDir", "./");
     if (dataPath.empty() || (dataPath.at(dataPath.length()-1) != '/' && dataPath.at(dataPath.length()-1) != '\\'))
@@ -2223,6 +2228,9 @@ void World::SetInitialWorldSettings()
 
     TC_LOG_INFO("server.loading", "Loading active world quests...");
     sWorldQuestMgr->LoadActiveWorldQuests();
+
+    TC_LOG_INFO("server.loading", "Loading battlepay products..");
+    sBattlePayMgr->LoadFromDB();
 
     // Preload all cells, if required for the base maps
     if (sWorld->getBoolConfig(CONFIG_BASEMAP_LOAD_GRIDS))

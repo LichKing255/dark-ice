@@ -38,6 +38,8 @@ public:
     void AddPet(uint32 species, uint32 creatureId, uint16 breed, uint8 quality, uint16 level = 1);
     void RemovePet(ObjectGuid guid);
 
+    std::unordered_map<uint64 /*battlePetGuid*/, BattlePet> const& GetPets() const { return _pets; }
+
     uint8 GetPetCount(bool aliveOnly = false) const;
     uint8 GetPetCount(uint32 species) const;
 

@@ -23,6 +23,7 @@
 #include "Battleground.h"
 #include "BattlegroundPackets.h"
 #include "BattlePetPackets.h"
+#include "BattlePay.h"
 #include "CalendarMgr.h"
 #include "CharacterPackets.h"
 #include "Chat.h"
@@ -1192,7 +1193,8 @@ void WorldSession::SendFeatureSystemStatus()
     features.EuropaTicketSystemStatus->SuggestionsEnabled = sWorld->getBoolConfig(CONFIG_SUPPORT_SUGGESTIONS_ENABLED);
 
     features.CharUndeleteEnabled = sWorld->getBoolConfig(CONFIG_FEATURE_SYSTEM_CHARACTER_UNDELETE_ENABLED);
-    features.BpayStoreEnabled = sWorld->getBoolConfig(CONFIG_FEATURE_SYSTEM_BPAY_STORE_ENABLED);
+    features.BpayStoreEnabled = sBattlePayMgr->IsStoreEnabled();
+    features.BpayStoreAvailable = sBattlePayMgr->IsStoreAvailable();
 
     SendPacket(features.Write());
 }
